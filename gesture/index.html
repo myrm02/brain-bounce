@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gesture Starter</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <video id="webcam" autoplay playsinline></video>
+  <canvas id="output"></canvas>
+
+  <div id="cursor"></div>
+
+  <div class="ui">
+    <button class="btn">Option 1</button>
+    <button class="btn">Option 2</button>
+    <button class="btn">Option 3</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+
+  <script src="hand-tracking.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
