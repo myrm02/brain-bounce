@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Gestuel et Vocal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <video id="webcam" autoplay playsinline muted></video>
+    <div id="cursor"></div>
+
+    <div class="ui" id="menuScreen">
+        <h1>Choisis un thème</h1>
+        <div class="buttons">
+            <button class="theme-btn" data-theme="geographie">Géographie</button>
+            <button class="theme-btn" data-theme="histoire">Histoire</button>
+            <button class="theme-btn" data-theme="sports">Sports</button>
+        </div>
+    </div>
+
+    <div class="quiz" id="quizScreen">
+        <h2 id="themeLabel"></h2>
+        <div id="questionText"></div>
+        <div id="statusText"></div>
+        <div id="spokenText"></div>
+        <div id="resultText"></div>
+
+        <div class="buttons">
+            <button id="listenBtn">Répondre à l'oral</button>
+            <button id="nextBtn">Question suivante</button>
+            <button id="backBtn">Retour</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="hand-tracking.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
