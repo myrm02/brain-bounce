@@ -42,7 +42,6 @@ const questions = {
                 ["empereur", "francais"],
                 ["empereur", "français"]
             ],
-            containsAny: ["empereur"]
         },
         {
             question: "En quelle année a eu lieu la Révolution française ?",
