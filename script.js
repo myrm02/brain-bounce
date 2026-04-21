@@ -35,13 +35,15 @@ const questions = {
         {
             question: "Qui est Napoléon ?",
             exact: [
-                "empereur",
+                "empereur de france",
+                "empereur des francais",
+                "empereur français"
             ],
             containsAll: [
                 ["empereur", "france"],
                 ["empereur", "francais"],
                 ["empereur", "français"]
-            ],
+            ]
         },
         {
             question: "En quelle année a eu lieu la Révolution française ?",
@@ -100,21 +102,54 @@ if (SpeechRecognition) {
     };
 
     recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        spokenText.textContent = `Réponse entendue : "${transcript}"`;
+        const alternatives = [];
 
-        const evaluation = evaluateAnswer(transcript, currentQuestion);
+        for (let i = 0; i < event.results[0].length; i++) {
+            alternatives.push(event.results[0][i].transcript);
+        }
 
-        if (evaluation.correct) {
+        spokenText.textContent = `Réponses entendues : ${alternatives.join(" | ")}`;
+
+        let bestEvaluation = {
+            correct: false,
+            reason: "Réponse non reconnue."
+        };
+
+        for (const transcript of alternatives) {
+            const evaluation = evaluateAnswer(transcript, currentQuestion);
+            if (evaluation.correct) {
+                bestEvaluation = evaluation;
+                break;
+            }
+        }
+
+        if (bestEvaluation.correct) {
             resultText.textContent = "✅ Bonne réponse";
             resultText.style.color = "limegreen";
-            statusText.textContent = evaluation.reason;
+            statusText.textContent = bestEvaluation.reason;
         } else {
             resultText.textContent = "❌ Mauvaise réponse";
             resultText.style.color = "tomato";
-            statusText.textContent = evaluation.reason || "Essaie encore.";
+            statusText.textContent = bestEvaluation.reason || "Essaie encore.";
         }
     };
+}
+
+function correctCommonASRErrors(text) {
+    let t = normalize(text);
+
+    const replacements = [
+        [/heure de france/g, "empereur de france"],
+        [/heure des france/g, "empereur de france"],
+        [/heure de francais/g, "empereur francais"],
+        [/empereur des france/g, "empereur de france"]
+    ];
+
+    for (const [pattern, replacement] of replacements) {
+        t = t.replace(pattern, replacement);
+    }
+
+    return t;
 }
 
 function normalize(text) {
@@ -173,7 +208,7 @@ function similarity(a, b) {
 }
 
 function evaluateAnswer(userAnswer, rule) {
-    const input = normalize(userAnswer);
+    const input = correctCommonASRErrors(userAnswer);
 
     if (!input) {
         return {
