@@ -12,7 +12,7 @@
     <video id="webcam" autoplay playsinline muted></video>
     <div id="cursor"></div>
 
-    <div class="ui" id="menuScreen">
+    <div class="screen active" id="menuScreen">
         <h1>Choisis un thème</h1>
         <div class="buttons">
             <button class="theme-btn" data-theme="geographie">Géographie</button>
@@ -21,7 +21,16 @@
         </div>
     </div>
 
+    <!-- LOADER
+<div id="loader" class="screen hidden">
+  <div class="loader"></div>
+  <p>Chargement...</p>
+</div> -->
+
     <div class="quiz" id="quizScreen">
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
         <h2 id="themeLabel"></h2>
         <div id="questionText"></div>
         <div id="statusText"></div>
@@ -34,6 +43,14 @@
             <button id="backBtn">Retour</button>
         </div>
     </div>
+
+    <!-- RESULT -->
+<div id="result" class="screen hidden">
+  <h2>🎉 Résultat</h2>
+  <div class="score" id="score"></div>
+  <p id="message"></p>
+  <button class="btn" id="restartBtn">Rejouer</button>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>

@@ -7,6 +7,10 @@ const themeButtons = document.querySelectorAll(".theme-btn");
 const listenBtn = document.getElementById("listenBtn");
 const nextBtn = document.getElementById("nextBtn");
 const backBtn = document.getElementById("backBtn");
+const progressBar = document.getElementById("progressBar");
+const loaderScreen = document.getElementById("loader");
+const resultScreen = document.getElementById("result");
+const restartBtn = document.getElementById("restartBtn");
 
 const themeLabel = document.getElementById("themeLabel");
 const questionText = document.getElementById("questionText");
@@ -42,6 +46,7 @@ const questions = {
                 ["empereur", "francais"],
                 ["empereur", "français"]
             ],
+            containsAny: ["empereur"]
         },
         {
             question: "En quelle année a eu lieu la Révolution française ?",
@@ -67,6 +72,8 @@ const questions = {
 let currentTheme = null;
 let currentQuestion = null;
 let isListening = false;
+let progression = 0;
+let score = 0;
 
 const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -109,12 +116,30 @@ if (SpeechRecognition) {
             resultText.textContent = "✅ Bonne réponse";
             resultText.style.color = "limegreen";
             statusText.textContent = evaluation.reason;
+            score++;
         } else {
             resultText.textContent = "❌ Mauvaise réponse";
             resultText.style.color = "tomato";
             statusText.textContent = evaluation.reason || "Essaie encore.";
         }
     };
+}
+
+function correctCommonASRErrors(text) {
+    let t = normalize(text);
+
+    const replacements = [
+        [/heure de france/g, "empereur de france"],
+        [/heure des france/g, "empereur de france"],
+        [/heure de francais/g, "empereur francais"],
+        [/empereur des france/g, "empereur de france"]
+    ];
+
+    for (const [pattern, replacement] of replacements) {
+        t = t.replace(pattern, replacement);
+    }
+
+    return t;
 }
 
 function normalize(text) {
@@ -173,7 +198,7 @@ function similarity(a, b) {
 }
 
 function evaluateAnswer(userAnswer, rule) {
-    const input = normalize(userAnswer);
+    const input = correctCommonASRErrors(userAnswer);
 
     if (!input) {
         return {
@@ -264,6 +289,8 @@ function showQuiz(theme) {
     statusText.textContent = "Clique sur le bouton pour répondre à l'oral.";
     spokenText.textContent = "";
     resultText.textContent = "";
+
+    updateProgress();
 }
 
 function showMenu() {
@@ -276,11 +303,19 @@ function showMenu() {
 function nextQuestion() {
     if (!currentTheme) return;
 
+    progression++;
+
     currentQuestion = randomQuestion(currentTheme);
+
+    if(progression < questions[currentTheme].length){
     questionText.textContent = currentQuestion.question;
     statusText.textContent = "Nouvelle question.";
     spokenText.textContent = "";
     resultText.textContent = "";
+
+  } else {
+    showResult(currentTheme);
+  }
 }
 
 function capitalize(word) {
@@ -312,6 +347,7 @@ themeButtons.forEach(btn => {
 listenBtn.addEventListener("click", startListening);
 nextBtn.addEventListener("click", nextQuestion);
 backBtn.addEventListener("click", showMenu);
+restartBtn.addEventListener("click", restart);
 
 let posX = window.innerWidth / 2;
 let posY = window.innerHeight / 2;
@@ -351,3 +387,49 @@ window.onHandUpdate(({ x, y, isPinching }) => {
 
     lastPinch = isPinching;
 });
+
+/* NAVIGATION */
+function show(screen){
+  document.querySelectorAll('.screen').forEach(s=>{
+    s.classList.remove('active');
+    s.classList.add('hidden');
+  });
+
+  const el = document.getElementById(screen);
+  el.classList.remove('hidden');
+  el.classList.add('active');
+
+}
+
+/* PROGRESS */
+function updateProgress(){
+  const percent = (progression / questions.length) * 100;
+  document.getElementById("progressBar").style.width = percent + "%";
+}
+
+/* RESULT */
+function showResult(theme){
+  resultScreen.classList.remove('hidden');
+  resultScreen.classList.add('active');
+  quizScreen.style.display = "none";
+
+  console.log(score, questions[theme].length);
+
+  document.getElementById("score").innerText =
+    score + " / " + questions[theme].length;
+
+  let msg = "";
+  if(score === questions[theme].length) msg = "🔥 Génie !";
+  else if(score > 1) msg = "💪 Bien joué !";
+  else msg = "😅 Tu peux mieux faire";
+
+  document.getElementById("message").innerText = msg;
+}
+
+/* RESTART */
+function restart(){
+  progression = 0;
+  score = 0;
+  resultScreen.style.display = "none";
+  showMenu();
+}
