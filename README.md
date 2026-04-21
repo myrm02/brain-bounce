@@ -20,11 +20,11 @@ Stack :
 
 Sources et inspirations :
 
-Code source -> Repo de Noé GUILLAUMIN (https://github.com/Antoinoe/IIM-User-Interface-Demos)
-Logo -> Généré avec ChatGPT
-Design UI de la page de jeu et charte graphique (CSS) -> Généré avec ChatGPT à partir du logo généré
-Design UX de la page de jeu (CSS) -> Généré avec ChatGPT avec des instructions axé uniquement sur la fluidité de navigation entre les questions et le menu principal du jeu
-Landing page -> Généré avec ChatGPT basé sur le logo et la fonction de l'application
+- Code source -> Repo de Noé GUILLAUMIN (https://github.com/Antoinoe/IIM-User-Interface-Demos)
+- Logo -> Généré avec ChatGPT
+- Design UI de la page de jeu et charte graphique (CSS) -> Généré avec ChatGPT à partir du logo généré
+- Design UX de la page de jeu (CSS) -> Généré avec ChatGPT avec des instructions axé uniquement sur la fluidité de navigation entre les questions et le menu principal du jeu
+- Landing page -> Généré avec ChatGPT basé sur le logo et la fonction de l'application
 
 
 
