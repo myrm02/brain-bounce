@@ -39,14 +39,15 @@ const questions = {
         {
             question: "Qui est Napoléon ?",
             exact: [
-                "empereur",
+                "empereur de france",
+                "empereur des francais",
+                "empereur français"
             ],
             containsAll: [
                 ["empereur", "france"],
                 ["empereur", "francais"],
                 ["empereur", "français"]
-            ],
-            containsAny: ["empereur"]
+            ]
         },
         {
             question: "En quelle année a eu lieu la Révolution française ?",
@@ -107,20 +108,36 @@ if (SpeechRecognition) {
     };
 
     recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        spokenText.textContent = `Réponse entendue : "${transcript}"`;
+        const alternatives = [];
 
-        const evaluation = evaluateAnswer(transcript, currentQuestion);
+        for (let i = 0; i < event.results[0].length; i++) {
+            alternatives.push(event.results[0][i].transcript);
+        }
 
-        if (evaluation.correct) {
+        spokenText.textContent = `Réponses entendues : ${alternatives.join(" | ")}`;
+
+        let bestEvaluation = {
+            correct: false,
+            reason: "Réponse non reconnue."
+        };
+
+        for (const transcript of alternatives) {
+            const evaluation = evaluateAnswer(transcript, currentQuestion);
+            if (evaluation.correct) {
+                bestEvaluation = evaluation;
+                break;
+            }
+        }
+
+        if (bestEvaluation.correct) {
             resultText.textContent = "✅ Bonne réponse";
             resultText.style.color = "limegreen";
-            statusText.textContent = evaluation.reason;
+            statusText.textContent = bestEvaluation.reason;
             score++;
         } else {
             resultText.textContent = "❌ Mauvaise réponse";
             resultText.style.color = "tomato";
-            statusText.textContent = evaluation.reason || "Essaie encore.";
+            statusText.textContent = bestEvaluation.reason || "Essaie encore.";
         }
     };
 }
@@ -289,8 +306,6 @@ function showQuiz(theme) {
     statusText.textContent = "Clique sur le bouton pour répondre à l'oral.";
     spokenText.textContent = "";
     resultText.textContent = "";
-
-    updateProgress();
 }
 
 function showMenu() {
@@ -312,6 +327,7 @@ function nextQuestion() {
     statusText.textContent = "Nouvelle question.";
     spokenText.textContent = "";
     resultText.textContent = "";
+    updateProgress(currentTheme);
 
   } else {
     showResult(currentTheme);
@@ -388,22 +404,9 @@ window.onHandUpdate(({ x, y, isPinching }) => {
     lastPinch = isPinching;
 });
 
-/* NAVIGATION */
-function show(screen){
-  document.querySelectorAll('.screen').forEach(s=>{
-    s.classList.remove('active');
-    s.classList.add('hidden');
-  });
-
-  const el = document.getElementById(screen);
-  el.classList.remove('hidden');
-  el.classList.add('active');
-
-}
-
 /* PROGRESS */
-function updateProgress(){
-  const percent = (progression / questions.length) * 100;
+function updateProgress(theme){
+  const percent = (progression / questions[theme].length) * 100;
   document.getElementById("progressBar").style.width = percent + "%";
 }
 
