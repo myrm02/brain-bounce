@@ -47,6 +47,49 @@
     gap: 20px;
 }
 
+.gameMenu h1 {
+    font-size: 4rem;
+    padding: 20px;
+    font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  text-shadow: 
+    0 2px 0 rgba(0,0,0,0.2),
+    0 4px 10px rgba(0,0,0,0.25);
+
+  /* 🔥 clé du style */
+  font-style: normal;
+  font-variation-settings: "wdth" 110;
+}
+
+.theme-btn {
+  margin-top:30px;
+  padding:18px 50px;
+  background:linear-gradient(135deg,#ffcc00,#ff9900);
+  color:#333;
+  border-radius:50px;
+  border-style: none;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  transition:0.2s;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  transform: skewX(-8deg) translateY(2px);
+
+  /* 🔥 clé du style */
+  font-style: normal;
+  font-variation-settings: "wdth" 110;
+}
+
+.theme-btn:hover { transform:scale(1.05); }
+.theme-btn:active { transform:scale(0.95); }
+
 button {
     padding: 16px 24px;
     font-size: 1.1rem;
@@ -55,10 +98,34 @@ button {
     background: #2563eb;
     color: white;
     cursor: pointer;
+    font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  transform: skewX(-8deg) translateY(2px);
+
+  /* 🔥 clé du style */
+  font-style: normal;
+  font-variation-settings: "wdth" 110;
+  padding:18px 50px;
+  background:linear-gradient(135deg,#ffcc00,#ff9900);
+  color:#333;
+  border-radius:50px;
+  border-style: none;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  transition:0.2s;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
 }
 
 button.hovered {
-    background: #1d4ed8;
+    background:linear-gradient(135deg,#ff9900,#ffcc00);
     transform: scale(1.05);
 }
 
@@ -199,6 +266,21 @@ p {
   margin:20px 0;
 }
 
+.btn {
+  margin-top:30px;
+  padding:18px 50px;
+  background:linear-gradient(135deg,#ffcc00,#ff9900);
+  color:#333;
+  border-radius:50px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  transition:0.2s;
+}
+
+.btn:hover { transform:scale(1.05); }
+.btn:active { transform:scale(0.95); }
+
 /* ANIMATIONS */
 @keyframes fadeIn {
   from {opacity:0; transform:translateY(20px);}
@@ -222,6 +304,85 @@ p {
   to { transform:translateX(0); opacity:1; }
 }
 
+.container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* ✅ colle en haut */
+  padding-top: 30px; /* ajuste finement */
+
+  height: 100vh;
+
+  /* scroll actif mais invisible */
+  overflow-y: scroll;
+  scrollbar-width: none;
+
+  padding: 40px 20px;
+
+  /* IMPORTANT : on réduit le gap global */
+  gap: clamp(20px, 4vh, 40px);
+}
+
+/* cache scrollbar Chrome */
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+/* LOGO */
+.logo {
+  width: 180px;
+  margin-bottom: 5px;
+
+  transform: translateY(-10px); /* 🔥 réduit visuellement l’espace au-dessus */
+}
+
+/* contrôle précis de l’espace */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  margin-top: -27px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  text-shadow: 
+    0 2px 0 rgba(0,0,0,0.2),
+    0 4px 10px rgba(0,0,0,0.25);
+
+  /* 🔥 clé du style */
+  font-style: normal;
+  font-variation-settings: "wdth" 110;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  opacity: 0.9;
+  max-width: 500px;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 400;
+
+  /* 🔥 clé du style */
+  font-style: normal;
+  font-variation-settings: "wdth" 110;
+}
+
+/* BUTTON */
 .btn {
   margin-top:30px;
   padding:18px 50px;
@@ -232,7 +393,127 @@ p {
   cursor:pointer;
   box-shadow:0 10px 30px rgba(0,0,0,0.3);
   transition:0.2s;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+
+  /* 🔥 clé du style */
+  font-style: normal;
+  font-variation-settings: "wdth" 110;
 }
 
 .btn:hover { transform:scale(1.05); }
 .btn:active { transform:scale(0.95); }
+
+/* SECTION INFO */
+.info {
+  width: 100%;
+  text-align: center;
+  margin-top: 90px;
+}
+
+.info h2 {
+  font-size: 2rem;
+  margin-bottom: 25px;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  text-shadow: 
+    0 2px 0 rgba(0,0,0,0.2),
+    0 4px 10px rgba(0,0,0,0.25);
+
+  /* 🔥 clé du style */
+  font-style: normal;
+  font-variation-settings: "wdth" 110;
+}
+
+/* CARDS RESPONSIVE */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+
+  /* 🔥 clé du style */
+  font-style: normal;
+  font-variation-settings: "wdth" 110;
+}
+
+.card p {
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 400;
+
+  /* 🔥 clé du style */
+  font-style: normal;
+  font-variation-settings: "wdth" 110;
+}
+
+
+/* FOOTER */
+footer {
+  margin-top: 100px;
+  margin-bottom: 50px;
+  opacity: 0.7;
+  font-size: 0.9rem;
+  text-align: center;
+  justify-content: center;
+}
+
+/* 📱 RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+
+  .container {
+    justify-content: flex-start;
+    padding-top: 50px;
+    padding-bottom: 40px;
+    gap: 25px;
+  }
+
+  .hero {
+    margin-top: 5px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .logo {
+    width: 140px;
+  }
+
+  footer {
+    font-size: 0.8rem;
+    padding-bottom: 30px;
+  }
+}

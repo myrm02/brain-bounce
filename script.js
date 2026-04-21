@@ -295,22 +295,27 @@ function randomQuestion(theme) {
 }
 
 function showQuiz(theme) {
+    show("quizScreen");
     currentTheme = theme;
     currentQuestion = randomQuestion(theme);
 
-    menuScreen.style.display = "none";
-    quizScreen.style.display = "flex";
+    // menuScreen.classList.remove("active");
+    // menuScreen.classList.add("hidden");
+    // quizScreen.style.display = "flex";
 
     themeLabel.textContent = `Thème : ${capitalize(theme)}`;
     questionText.textContent = currentQuestion.question;
     statusText.textContent = "Clique sur le bouton pour répondre à l'oral.";
     spokenText.textContent = "";
     resultText.textContent = "";
+
+    updateProgress(theme);
 }
 
 function showMenu() {
-    menuScreen.style.display = "flex";
-    quizScreen.style.display = "none";
+    show("menuScreen");
+    progression = 0;
+    score = 0;
     currentTheme = null;
     currentQuestion = null;
 }
@@ -323,15 +328,15 @@ function nextQuestion() {
     currentQuestion = randomQuestion(currentTheme);
 
     if(progression < questions[currentTheme].length){
-    questionText.textContent = currentQuestion.question;
-    statusText.textContent = "Nouvelle question.";
-    spokenText.textContent = "";
-    resultText.textContent = "";
-    updateProgress(currentTheme);
+        questionText.textContent = currentQuestion.question;
+        statusText.textContent = "Nouvelle question.";
+        spokenText.textContent = "";
+        resultText.textContent = "";
+        updateProgress(currentTheme);
 
-  } else {
-    showResult(currentTheme);
-  }
+    } else {
+        showResult(currentTheme);
+    }
 }
 
 function capitalize(word) {
@@ -404,6 +409,24 @@ window.onHandUpdate(({ x, y, isPinching }) => {
     lastPinch = isPinching;
 });
 
+/* NAVIGATION */
+function show(screen){
+  document.querySelectorAll('.screen').forEach(s=>{
+    s.classList.remove('active');
+    s.classList.add('hidden');
+  });
+
+  const el = document.getElementById(screen);
+  el.classList.remove('hidden');
+  el.classList.add('active');
+
+//   if(screen === "loader"){
+//     setTimeout(()=>{
+//       showMenu();
+//     }, 2000);
+//     }
+}
+
 /* PROGRESS */
 function updateProgress(theme){
   const percent = (progression / questions[theme].length) * 100;
@@ -412,9 +435,8 @@ function updateProgress(theme){
 
 /* RESULT */
 function showResult(theme){
-  resultScreen.classList.remove('hidden');
-  resultScreen.classList.add('active');
-  quizScreen.style.display = "none";
+  show("result");
+  progression = 0;
 
   console.log(score, questions[theme].length);
 
@@ -433,6 +455,5 @@ function showResult(theme){
 function restart(){
   progression = 0;
   score = 0;
-  resultScreen.style.display = "none";
   showMenu();
 }
